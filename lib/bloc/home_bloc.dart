@@ -15,15 +15,15 @@ class HomeBloc {
     var response = await _repository.getDrugs();
     if (response.isSucces) {
       resultDrug = DrugsModel.fromJson(response.result);
-      // List database = await _repository.getProduct();
-      // for (int i = 0; i < resultDrug!.results.length; i++) {
-      //   for (int j = 0; j < database.length; j++) {
-      //     if (resultDrug!.results[i].id == database[j].id) {
-      //       resultDrug!.results[i].cardCount = database[j].cardCount;
-      //       break;
-      //     }
-      //   }
-      // }
+      List<DrugsResult> database = await _repository.getProduct();
+      for (int i = 0; i < resultDrug!.results.length; i++) {
+        for (int j = 0; j < database.length; j++) {
+          if (resultDrug!.results[i].id == database[j].id) {
+            resultDrug!.results[i].cardCount = database[j].cardCount;
+            break;
+          }
+        }
+      }
 
       drugsFetch.sink.add(resultDrug!);
     }

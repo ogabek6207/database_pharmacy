@@ -7,7 +7,7 @@ class Repository {
   final AppProvider _provider = AppProvider();
   DatabaseHelper databaseHelper = DatabaseHelper();
 
-  Future<List<DrugsResult>> getProduct() => databaseHelper.getProduct();
+  Future<List<DrugsResult>> getProduct() => databaseHelper.getDrugsDatabase();
 
   Future<int> saveProducts(DrugsResult item) =>
       databaseHelper.saveProduct(item);
@@ -18,5 +18,7 @@ class Repository {
       databaseHelper.updateProduct(item);
 
   Future<HttpResult> getDrugs() => _provider.getDrugs();
+
+
 
 }

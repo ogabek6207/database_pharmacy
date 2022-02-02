@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:database_pharmacy/bloc/home_bloc.dart';
 import 'package:database_pharmacy/model/drugs_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ItemHorizontalWidget extends StatefulWidget {
   final DrugsResult data;
@@ -86,10 +85,6 @@ class _ItemHorizontalWidgetState extends State<ItemHorizontalWidget> {
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        SvgPicture.asset("assets/icons/korzinka.svg")
                       ],
                     ),
                   ),
@@ -112,6 +107,8 @@ class _ItemHorizontalWidgetState extends State<ItemHorizontalWidget> {
                               widget.data.id,
                               widget.data.cardCount,
                             );
+                          } else {
+
                           }
                         },
                         child: Container(

@@ -42,7 +42,7 @@ class DatabaseHelper {
     // user
     await db.execute(
       'CREATE TABLE $tableProduct('
-      '$columnId INTEGER PRIMARY KEY AUTOINCREMENT, '
+      '$columnId INTEGER PRIMARY KEY, '
       '$columnName TEXT, '
       '$columnImage TEXT, '
       '$columnPrice REAl,'
@@ -63,11 +63,11 @@ class DatabaseHelper {
   }
 
   //user get
-  Future<List<DrugsResult>> getProduct() async {
+  Future<List<DrugsResult>> getDrugsDatabase() async {
     var dbClient = await db;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM $tableProduct');
     List<DrugsResult> products = <DrugsResult>[];
-    for (int i = 0; i < list.length; DrugsResult) {
+    for (int i = 0; i < list.length; i++) {
       var items = DrugsResult(
         id: list[i][columnId],
         name: list[i][columnName],
