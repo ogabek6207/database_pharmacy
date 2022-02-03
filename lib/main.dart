@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:database_pharmacy/ui/home/home_screen.dart';
+import 'package:database_pharmacy/ui/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:    HomeScreen(),
+      home:    MainScreen(),
     );
   }
 }

@@ -20,6 +20,7 @@ class _SaveProductScreenState extends State<SaveProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(),
       body: StreamBuilder(
         stream: homeBloc.fetchDrugs,
@@ -31,8 +32,7 @@ class _SaveProductScreenState extends State<SaveProductScreen> {
                 : Container(
                     color: Colors.orange,
                     child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+
                       scrollDirection: Axis.vertical,
                       itemCount: drugsRersult.length,
                       itemBuilder: (context, index) {

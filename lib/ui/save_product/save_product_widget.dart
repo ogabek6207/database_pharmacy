@@ -177,7 +177,7 @@ class _SaveProductWidgetState extends State<SaveProductWidget> {
                           color: Colors.blue
                               .withOpacity(0.1),
                           borderRadius:
-                          BorderRadius.circular(10 ),
+                          BorderRadius.circular(10),
                         ),
                         child: Row(
                           children: [

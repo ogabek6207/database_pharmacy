@@ -108,7 +108,11 @@ class _ItemHorizontalWidgetState extends State<ItemHorizontalWidget> {
                               widget.data.cardCount,
                             );
                           } else {
-
+                            homeBloc.updateDrugs(
+                              false,
+                              widget.data.id,
+                              0,
+                            );
                           }
                         },
                         child: Container(
