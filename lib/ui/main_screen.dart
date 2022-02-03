@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:database_pharmacy/ui/favourite/favourite_screen.dart';
 import 'package:database_pharmacy/ui/save_product/save_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,9 +21,11 @@ class _MainScreenState extends State<MainScreen> {
     final screens = [
       const HomeScreen(),
       const SaveProductScreen(),
+      const FavouriteScreen(),
     ];
     final items = [
       SvgPicture.asset("assets/icons/basket.svg"),
+      SvgPicture.asset("assets/icons/korzinka.svg",),
       SvgPicture.asset("assets/icons/korzinka.svg",),
     ];
     return Scaffold(

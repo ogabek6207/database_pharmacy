@@ -7,10 +7,13 @@ class HomeBloc {
   final Repository _repository = Repository();
   final drugsFetch = PublishSubject<DrugsModel>();
   final drugsCardFetch = PublishSubject<List<DrugsResult>>();
+  final drugsFavFetch = PublishSubject<List<DrugsResult>>();
 
   Stream<DrugsModel> get fetchDrugs => drugsFetch.stream;
 
   Stream<List<DrugsResult>> get fetchCardDrugs => drugsCardFetch.stream;
+
+  Stream<List<DrugsResult>> get fetchFavDrugs => drugsFavFetch.stream;
 
   DrugsModel? resultDrug;
 
@@ -19,11 +22,18 @@ class HomeBloc {
     drugsCardFetch.sink.add(database);
   }
 
+  ///fav
+  getDrugsFav() async {
+    List<DrugsResult> database = await _repository.getFavProduct();
+    drugsCardFetch.sink.add(database);
+  }
+
   getDrugs() async {
     var response = await _repository.getDrugs();
     if (response.isSucces) {
       resultDrug = DrugsModel.fromJson(response.result);
       List<DrugsResult> database = await _repository.getProduct();
+      List<DrugsResult> databaseFav = await _repository.getFavProduct();
       for (int i = 0; i < resultDrug!.results.length; i++) {
         for (int j = 0; j < database.length; j++) {
           if (resultDrug!.results[i].id == database[j].id) {
@@ -31,10 +41,35 @@ class HomeBloc {
             break;
           }
         }
+        for (int j = 0; j < databaseFav.length; j++) {
+          if (resultDrug!.results[i].id == databaseFav[j].id) {
+            resultDrug!.results[i].favSelected = true;
+            break;
+          }
+        }
       }
 
       drugsFetch.sink.add(resultDrug!);
     }
+  }
+
+  ///fav
+  updateFavDrugs(
+    DrugsResult data,
+    bool like,
+  ) async {
+    for (int i = 0; i < resultDrug!.results.length; i++) {
+      if (resultDrug!.results[i].id == data.id) {
+        resultDrug!.results[i].favSelected = like;
+        break;
+      }
+    }
+    if (like) {
+      _repository.saveFavProducts(data);
+    } else {
+      _repository.deleteFavProducts(data.id);
+    }
+    drugsFetch.sink.add(resultDrug!);
   }
 
   updateCardDrugs(

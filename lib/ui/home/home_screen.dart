@@ -21,8 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: GestureDetector(
         onTap: () {},
         child: SizedBox(
@@ -40,7 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     return ItemHorizontalWidget(
                       key: Key(
-                        drugsRersult[index].cardCount.toString(),
+                        drugsRersult[index].cardCount.toString() +
+                            "id" +
+                            drugsRersult[index].id.toString() +
+                            "" +
+                            drugsRersult[index].favSelected.toString(),
                       ),
                       data: drugsRersult[index],
                     );

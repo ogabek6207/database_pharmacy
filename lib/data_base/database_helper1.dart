@@ -10,6 +10,7 @@ class DatabaseHelper {
 
   //COLUMN
   final String tableProduct = 'tableProduct';
+  final String tableFavourite = 'tableFavourite';
   final String columnId = 'id';
   final String columnName = 'name';
   final String columnImage = 'image';
@@ -17,7 +18,6 @@ class DatabaseHelper {
   final String columnBasePrice = 'base_price';
   final String columnDescription = 'description';
   final String columnCount = 'card_count';
-
   static Database? _db;
 
   DatabaseHelper.internal();
@@ -45,9 +45,19 @@ class DatabaseHelper {
       '$columnId INTEGER PRIMARY KEY, '
       '$columnName TEXT, '
       '$columnImage TEXT, '
-      '$columnPrice REAl,'
-      '$columnDescription TEXT,'
-      '$columnCount INTEGER,'
+      '$columnPrice REAl, '
+      '$columnDescription TEXT, '
+      '$columnCount INTEGER, '
+      '$columnBasePrice REAl)',
+    );
+    await db.execute(
+      'CREATE TABLE $tableFavourite('
+      '$columnId INTEGER PRIMARY KEY, '
+      '$columnName TEXT, '
+      '$columnImage TEXT, '
+      '$columnPrice REAl, '
+      '$columnDescription TEXT, '
+      '$columnCount INTEGER, '
       '$columnBasePrice REAl)',
     );
   }
@@ -105,5 +115,45 @@ class DatabaseHelper {
   Future close() async {
     var dbClient = await db;
     return dbClient.close();
+  }
+
+  ///user FAV
+  Future<List<DrugsResult>> getDrugsFavDatabase() async {
+    var dbClient = await db;
+    List<Map> list = await dbClient.rawQuery('SELECT * FROM $tableFavourite');
+    List<DrugsResult> products = <DrugsResult>[];
+    for (int i = 0; i < list.length; i++) {
+      var items = DrugsResult(
+        id: list[i][columnId],
+        name: list[i][columnName],
+        image: list[i][columnImage],
+        price: list[i][columnPrice],
+        basePrice: list[i][columnBasePrice],
+        description: list[i][columnDescription],
+        favSelected: true,
+      );
+      products.add(items);
+    }
+    return products;
+  }
+
+  ///delete fav
+  Future<int> deleteFavProduct(int id) async {
+    var dbClient = await db;
+    return await dbClient.delete(
+      tableFavourite,
+      where: '$columnId = ?',
+      whereArgs: [id],
+    );
+  }
+
+  ///save fav
+  Future<int> saveFavProduct(DrugsResult item) async {
+    var dbClient = await db;
+    var result = await dbClient.insert(
+      tableFavourite,
+      item.toJson(),
+    );
+    return result;
   }
 }

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:database_pharmacy/bloc/home_bloc.dart';
 import 'package:database_pharmacy/model/drugs_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ItemHorizontalWidget extends StatefulWidget {
   final DrugsResult data;
@@ -28,11 +29,31 @@ class _ItemHorizontalWidgetState extends State<ItemHorizontalWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CachedNetworkImage(
-            imageUrl: widget.data.image,
-            fit: BoxFit.cover,
-            width: 140,
-            height: 140,
+          Stack(
+            children: [
+              CachedNetworkImage(
+                imageUrl: widget.data.image,
+                fit: BoxFit.cover,
+                width: 140,
+                height: 140,
+              ),
+              GestureDetector(
+                onTap: () {
+                  homeBloc.updateFavDrugs(
+                    widget.data,
+                    !widget.data.favSelected,
+                  );
+                },
+                child: widget.data.favSelected
+                    ? SvgPicture.asset(
+                        "assets/icons/dislike.svg",
+                        color: Colors.red,
+                      )
+                    : SvgPicture.asset(
+                        "assets/icons/dislike.svg",
+                      ),
+              )
+            ],
           ),
           const SizedBox(
             height: 7,
