@@ -39,33 +39,30 @@ class _SaveProductWidgetState extends State<SaveProductWidget> {
                   ),
                   widget.data.basePrice != 0
                       ? Positioned(
-                    top: 0,
-                    right: 0,
-                    child: Container(
-                      height: 18,
-                      width: 42,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 4, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius:
-                        BorderRadius.circular(9),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "-" +
-                              ((widget.data.basePrice -
-                                  widget.data
-                                      .price) *
-                                  100 ~/
-                                  widget.data
-                                      .basePrice)
-                                  .toString() +
-                              "%",
-                        ),
-                      ),
-                    ),
-                  )
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            height: 18,
+                            width: 42,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(9),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "-" +
+                                    ((widget.data.basePrice -
+                                                widget.data.price) *
+                                            100 ~/
+                                            widget.data.basePrice)
+                                        .toString() +
+                                    "%",
+                              ),
+                            ),
+                          ),
+                        )
                       : Container(),
                 ],
               ),
@@ -107,104 +104,45 @@ class _SaveProductWidgetState extends State<SaveProductWidget> {
                   ),
                   Row(
                     children: [
-                      Text(widget.data.price.toString() +
-                          " sum"),
+                      Text(widget.data.price.toString() + " sum"),
                       SizedBox(
-                        width: 12 ,
+                        width: 12,
                       ),
                       widget.data.basePrice != 0
                           ? Text(
-                        widget.data.basePrice.toString() +
-                            " sum",
-                        style: const TextStyle(
-                          decoration:
-                          TextDecoration.lineThrough,
-                        ),
-                      )
+                              widget.data.basePrice.toString() + " sum",
+                              style: const TextStyle(
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            )
                           : Container(),
                     ],
                   ),
                   SizedBox(
-                    height: 12 ,
+                    height: 12,
                   ),
                   Row(
                     children: [
-                      widget.data.cardCount == 0
-                          ? GestureDetector(
-                        onTap: () {
-                          homeBloc.updateDrugs(
-                            true,
-                            widget.data.id,
-                            1,
-                          );
-                        },
-                        child: Container(
-                          height: 30 ,
-                          width: 120 ,
-                          margin:
-                          EdgeInsets.only(left: 5 ),
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius:
-                            BorderRadius.circular(
-                                10 ),
-                          ),
-                          child: Row(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.center,
-                            mainAxisAlignment:
-                            MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "add to cart",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8 ,
-                              ),
-                              SvgPicture.asset(
-                                  "assets/icons/basket.svg")
-                            ],
-                          ),
-                        ),
-                      )
-                          : Container(
+                      Container(
                         height: 30,
-                        width: 120 ,
+                        width: 120,
                         decoration: BoxDecoration(
-                          color: Colors.blue
-                              .withOpacity(0.1),
-                          borderRadius:
-                          BorderRadius.circular(10),
+                          color: Colors.blue.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
                           children: [
                             GestureDetector(
                               onTap: () {
-                                if (widget.data.cardCount > 1) {
-                                  widget.data.cardCount--;
-                                  homeBloc.updateDrugs(
-                                    false,
-                                    widget.data.id,
-                                    widget.data.cardCount,
-                                  );
-                                }
-                                homeBloc.updateDrugs(
-                                  false,
-                                  widget.data.id,
-                                  0,
-                                );
+                                widget.data.cardCount--;
+                                homeBloc.updateCardDrugs(widget.data);
                               },
                               child: Container(
-                                height: 26 ,
-                                width: 26 ,
+                                height: 26,
+                                width: 26,
                                 decoration: BoxDecoration(
                                   color: Colors.blue,
-                                  borderRadius:
-                                  BorderRadius.circular(
-                                      10),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: const Icon(
                                   Icons.remove,
@@ -215,15 +153,11 @@ class _SaveProductWidgetState extends State<SaveProductWidget> {
                             const Spacer(),
                             Center(
                               child: Text(
-                                widget.data
-                                    .cardCount
-                                    .toString() +
-                                    " шт.",
+                                widget.data.cardCount.toString() + " шт.",
                                 style: TextStyle(
                                   color: Colors.blue,
-                                  fontWeight:
-                                  FontWeight.bold,
-                                  fontSize: 15 ,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
                                 ),
                               ),
                             ),
@@ -231,20 +165,14 @@ class _SaveProductWidgetState extends State<SaveProductWidget> {
                             GestureDetector(
                               onTap: () {
                                 widget.data.cardCount++;
-                                homeBloc.updateDrugs(
-                                  false,
-                                  widget.data.id,
-                                  widget.data.cardCount,
-                                );
+                                homeBloc.updateCardDrugs(widget.data);
                               },
                               child: Container(
-                                height: 26 ,
-                                width: 26 ,
+                                height: 26,
+                                width: 26,
                                 decoration: BoxDecoration(
                                   color: Colors.blue,
-                                  borderRadius:
-                                  BorderRadius.circular(
-                                      10),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: const Icon(
                                   Icons.add,
@@ -259,21 +187,20 @@ class _SaveProductWidgetState extends State<SaveProductWidget> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.data.favSelected =
-                            !widget.data.favSelected;
+                            widget.data.favSelected = !widget.data.favSelected;
                           });
                         },
                         child: widget.data.favSelected
                             ? SvgPicture.asset(
-                          "assets/icons/like.svg",
-                          height: 24,
-                          width: 24 ,
-                        )
+                                "assets/icons/like.svg",
+                                height: 24,
+                                width: 24,
+                              )
                             : SvgPicture.asset(
-                          "assets/icons/dislike.svg",
-                          height: 24,
-                          width: 24 ,
-                        ),
+                                "assets/icons/dislike.svg",
+                                height: 24,
+                                width: 24,
+                              ),
                       ),
                       SizedBox(
                         width: 17,

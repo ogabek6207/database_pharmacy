@@ -13,7 +13,7 @@ class SaveProductScreen extends StatefulWidget {
 class _SaveProductScreenState extends State<SaveProductScreen> {
   @override
   initState() {
-    homeBloc.getDrugs();
+    homeBloc.getDrugsCard();
     super.initState();
   }
 
@@ -23,16 +23,15 @@ class _SaveProductScreenState extends State<SaveProductScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(),
       body: StreamBuilder(
-        stream: homeBloc.fetchDrugs,
-        builder: (context, AsyncSnapshot<DrugsModel> snapshot) {
+        stream: homeBloc.fetchCardDrugs,
+        builder: (context, AsyncSnapshot<List<DrugsResult>> snapshot) {
           if (snapshot.hasData) {
-            List<DrugsResult> drugsRersult = snapshot.data!.results;
+            List<DrugsResult> drugsRersult = snapshot.data!;
             return drugsRersult.isEmpty
                 ? Container()
                 : Container(
                     color: Colors.orange,
                     child: ListView.builder(
-
                       scrollDirection: Axis.vertical,
                       itemCount: drugsRersult.length,
                       itemBuilder: (context, index) {

@@ -22,23 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return SaveProductScreen();
-                },
-              ),
-            );
-          },
-          child: Container(
-            height: 30,
-            width: 30,
-            color: Colors.white,
-          ),
-        ),
       ),
       body: GestureDetector(
         onTap: () {},

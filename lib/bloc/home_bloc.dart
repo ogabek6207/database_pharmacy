@@ -6,10 +6,18 @@ import 'package:rxdart/rxdart.dart';
 class HomeBloc {
   final Repository _repository = Repository();
   final drugsFetch = PublishSubject<DrugsModel>();
+  final drugsCardFetch = PublishSubject<List<DrugsResult>>();
 
   Stream<DrugsModel> get fetchDrugs => drugsFetch.stream;
 
+  Stream<List<DrugsResult>> get fetchCardDrugs => drugsCardFetch.stream;
+
   DrugsModel? resultDrug;
+
+  getDrugsCard() async {
+    List<DrugsResult> database = await _repository.getProduct();
+    drugsCardFetch.sink.add(database);
+  }
 
   getDrugs() async {
     var response = await _repository.getDrugs();
@@ -27,6 +35,18 @@ class HomeBloc {
 
       drugsFetch.sink.add(resultDrug!);
     }
+  }
+
+  updateCardDrugs(
+    DrugsResult data,
+  ) async {
+    if (data.cardCount == 0) {
+      _repository.deleteProducts(data.id);
+    } else {
+      _repository.updateProduct(data);
+    }
+    List<DrugsResult> database = await _repository.getProduct();
+    drugsCardFetch.sink.add(database);
   }
 
   updateDrugs(
@@ -57,6 +77,7 @@ class HomeBloc {
 
   dispose() {
     drugsFetch.close();
+    drugsCardFetch.close();
   }
 }
 
